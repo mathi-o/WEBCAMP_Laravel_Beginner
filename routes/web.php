@@ -20,8 +20,12 @@ Route::get('/welcome',[WelcomeController::class,'index']);
 Route::get('/welcome/second', [WelcomeController::class, 'second']);
 
 //タスク管理用システム
-Route::get('/',[AuthController::class,'index']);
+Route::get('/',[AuthController::class,'index'])->name('front.index');
+//認可処理
+Route::middleware(['auth'])->group(function(){
 Route::get('/task/list',[TaskController::class,'list']);
+Route::get('/logout',[AuthController::class,'logout']);
+});
 Route::post('/login',[AuthController::class,'login']);
 //form 入力用test
 Route::get('/test',[TestController::class,'index']);

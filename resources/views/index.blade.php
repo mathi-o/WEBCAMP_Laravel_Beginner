@@ -3,14 +3,13 @@
 
 {{--メインコンテンツ--}}
 @section ('contets')
-    @if($errors->any())
-        <div>
-            @foreach($errors->all() as $error){
-                {$error}
-            }<br>
+        @if ($errors->any())
+            <div>
+            @foreach ($errors->all() as $error)
+                {{ $error }}<br>
             @endforeach
-        </div>
-    @endif
+            </div>
+        @endif
         <h1>ログイン</h1>
         <form action="/login" method="post">
             @csrf
