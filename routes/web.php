@@ -22,6 +22,7 @@ Route::get('/welcome/second', [WelcomeController::class, 'second']);
 //タスク管理用システム
 Route::get('/',[AuthController::class,'index']);
 Route::get('/task/list',[TaskController::class,'list']);
+Route::post('/login',[AuthController::class,'login']);
 //form 入力用test
 Route::get('/test',[TestController::class,'index']);
 Route::post('/test/input',[TestController::class,'input']);
