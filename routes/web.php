@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WelcomeController;
+use App\Http\Controllers\AuthController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -12,10 +13,9 @@ use App\Http\Controllers\WelcomeController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-/*
-Route::get('/', function () {
-    return view('welcome');
-});
-*/
+//テスト用
 Route::get('/welcome',[WelcomeController::class,'index']);
 Route::get('/welcome/second', [WelcomeController::class, 'second']);
+
+//タスク管理用システム
+Route::get('/',[AuthController::class,'index']);
