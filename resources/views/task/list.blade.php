@@ -5,7 +5,7 @@
 {{--コンテンツ--}}
 @section('contets')
         <h1>タスクの登録(未実装)</h1>
-        @if(session('front.task_register_success')==true)
+        @if (session('front.task_register_success') == true)
                 タスクを登録しました<br>
         @endif
 
@@ -35,38 +35,17 @@
                 <th>期限
                 <th>重要度
             </tr>
+        @foreach($list as $task)
             <tr>
-                <td>HTML formの復習
-                <td>2024/04/05
-                <td>普通
+                <td>{{$task->name}}
+                <td>{{$task->period}}
+                <td>{{$task->getPriorityString()}}
                 <td><a href="./detail.html">詳細閲覧</a>
                 <td><a href="./edit.html">編集</a>
                 <td><form action="./top.html"><button>完了</button></form>
             </tr>
-            <tr>
-                <td>PHPの学習
-                <td>2024/04/15
-                <td>普通
-                <td><a href="./detail.html">詳細閲覧</a>
-                <td><a href="./edit.html">編集</a>
-                <td><form action="./top.html"><button>完了</button></form>
-            </tr>
-            <tr>
-                <td>RDBの学習
-                <td>2024/05/01
-                <td>普通
-                <td><a href="./detail.html">詳細閲覧</a>
-                <td><a href="./edit.html">編集</a>
-                <td><form action="./top.html"><button>完了</button></form>
-            </tr>
-            <tr>
-                <td>Laravelの学習
-                <td>2024/05/15
-                <td>普通
-                <td><a href="./detail.html">詳細閲覧</a>
-                <td><a href="./edit.html">編集</a>
-                <td><form action="./top.html"><button>完了</button></form>
-            </tr>
+        @endforeach
+
         </table>
         現在1ページ目<br>
         <a href="./top.html">最初のページ(未実装)</a>/
