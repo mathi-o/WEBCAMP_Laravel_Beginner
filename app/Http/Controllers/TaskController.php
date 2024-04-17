@@ -4,6 +4,9 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\TaskRegisterPostRequest;
+use Illuminate\Support\Facades\Auth;
+use App\Models\Task as TaskModel;
 
 class TaskController extends Controller{
     /**
@@ -21,7 +24,32 @@ class TaskController extends Controller{
      *
      * @return \Illuminate\View\View
      */
+    public function register(TaskRegisterPostRequest $request){
 
+        $datum=$request->validated();
+        //$user=Auth::user();
+        //$id=Auth::id();
+        //var_dump($datum,$user,$id); exit;
+
+        //userIDの追加
+        $datum['user_id']=Auth::id();
+
+        //テーブルへのインサート
+    try{
+        $r = TaskModel::create($datum);
+
+        var_dump($r); exit;
+    } catch(\Throwable $e){
+        echo $e->getMessage();
+        exit;
+    }
+
+    //タスク登録成功
+    $request->session()->flash('front.task_register_success',true);
+
+    return redirect('/task/list');
+
+    }
 
 
 }

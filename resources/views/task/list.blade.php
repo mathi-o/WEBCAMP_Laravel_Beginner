@@ -5,13 +5,26 @@
 {{--コンテンツ--}}
 @section('contets')
         <h1>タスクの登録(未実装)</h1>
-        <form action="./top.html" method="post">
-            タスク名:<input><br>
-            期限:<input type="date"><br>
-            タスク詳細:<textarea></textarea><br>
-            重要度:<label><input name="priority" type="radio">低い</label>/
-                <label><input name="priority" type="radio">普通 </label>/
-                <label><input name="priority" type="radio">高い </label><br>
+        @if(session('front.task_register_success')==true)
+                タスクを登録しました<br>
+        @endif
+
+        @if($errors->any())
+                <div>
+                    @foreach($errors->all() as $error)
+                        {{$error}}<br>
+                    @endforeach
+                </div>
+            @endif
+
+        <form action="/task/register" method="post">
+            @csrf
+            タスク名:<input name="name" value="{{old('name')}}"><br>
+            期限:<input name="period" type="date" value="{{old('period')}}"><br>
+            タスク詳細:<textarea name="detail" value="{{old('detail')}}"></textarea><br>
+            重要度:<label><input name="priority" type="radio"  value="1" @if(old('priority')==1) checked @endif>低い</label>/
+                <label><input name="priority" type="radio"  value="2" @if(old('priority',2)==2) checked @endif>普通 </label>/
+                <label><input name="priority" type="radio" value="3" @if(old('priority')==3) checked @endif>高い </label><br>
                 <button>タスクを登録する</button>
         </form>
         <h1>タスク一覧(未実装)</h1>
