@@ -15,13 +15,14 @@ class TaskController extends Controller{
      * @return \Illuminate\view\view
      */
     public function list(){
-
+        $per_page=2;
         //一覧の取得
         $list=TaskModel::where('user_id',Auth::id())
                         ->orderBy('priority','DESC')
                         ->orderBy('period')
                         ->orderBy('created_at')
-                        ->get();//「user_idが"認可情報"と一致している」tasksテーブルの全件を取得。where('user_id',Auth::id())がなければtasksテーブルの全件取得
+                        ->paginate($per_page);
+                       // ->get();//「user_idが"認可情報"と一致している」tasksテーブルの全件を取得。where('user_id',Auth::id())がなければtasksテーブルの全件取得
         /*$sql=TaskModel::where('user_id',Auth::id())
                         ->orderBy('priority','DESC')
                         ->orderBy('period')
@@ -40,31 +41,32 @@ class TaskController extends Controller{
      *
      * @return \Illuminate\View\View
      */
-    public function register(TaskRegisterPostRequest $request){
+    public function register(TaskRegisterPostRequest $request)
+    {
+        // validate済みのデータの取得
+        $datum = $request->validated();
+        //
+        //$user = Auth::user();
+        //$id = Auth::id();
+        //var_dump($datum, $user, $id); exit;
 
-        $datum=$request->validated();
-        //$user=Auth::user();
-        //$id=Auth::id();
-        //var_dump($datum,$user,$id); exit;
+        // user_id の追加
+        $datum['user_id'] = Auth::id();
 
-        //userIDの追加
-        $datum['user_id']=Auth::id();
+        // テーブルへのINSERT
+        try {
+            $r = TaskModel::create($datum);
+        } catch(\Throwable $e) {
+            // XXX 本当はログに書く等の処理をする。今回は一端「出力する」だけ
+            echo $e->getMessage();
+            exit;
+        }
 
-        //テーブルへのインサート
-    try{
-        $r = TaskModel::create($datum);
+        // タスク登録成功
+        $request->session()->flash('front.task_register_success', true);
 
-        var_dump($r); exit;
-    } catch(\Throwable $e){
-        echo $e->getMessage();
-        exit;
-    }
-
-    //タスク登録成功
-     $request->session()->flash('front.task_register_success', true);
-
-     return redirect('/task/list');
-
+        //
+        return redirect('/task/list');
     }
 
 

@@ -47,10 +47,23 @@
         @endforeach
 
         </table>
-        現在1ページ目<br>
-        <a href="./top.html">最初のページ(未実装)</a>/
-        <a href="./top.html">前に戻る(未実装)</a>/
-        <a href="./top.html">次に進む(未実装)</a>
+        {{--{{$list->links()}}--}}
+        現在{{$list->currentpage()}}ページ目<br>
+        @if($list->onFirstPage()===false)
+            <a href="/task/list">最初のページ</a>
+        @else
+            最初のページ
+        @endif/
+        @if($list->previousPageUrl()!==null)
+            <a href="{{$list->previouspageurl()}}">前に戻る</a>
+        @else
+            前に戻る
+        @endif/
+        @if($list->nextPageUrl()!==null)
+            <a href="{{$list->nextpageurl()}}">次に進む</a>
+        @else
+            次に進む
+        @endif
         <br>
         <hr>
         <menu>
