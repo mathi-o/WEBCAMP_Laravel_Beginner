@@ -15,7 +15,7 @@ class TaskController extends Controller{
      * @return \Illuminate\view\view
      */
     public function list(){
-        $per_page=2;
+        $per_page=20;
         //一覧の取得
         $list=TaskModel::where('user_id',Auth::id())
                         ->orderBy('priority','DESC')
@@ -70,7 +70,27 @@ class TaskController extends Controller{
         return redirect('/task/list');
     }
 
-    public function detail($task_id){
+    public function detail($task_id)
+    {
+
+
+        return $this->singleTaskRender($task_id,'task.detail');
+
+    }
+
+
+
+    public function edit($task_id)
+    {
+
+        return $this->singleTaskRender($task_id,'task.edit');
+    }
+
+
+
+    protected function singleTaskRender($task_id,$template_name)
+    {
+        // task_idのレコードを取得する
         $task = TaskModel::find($task_id);
 
         if($task===null)
@@ -78,11 +98,46 @@ class TaskController extends Controller{
             return redirect('/task/list');
         }
 
+        //本人以外のタスクならアクセス拒否
         if($task->user_id !== Auth::id())
         {
             return redirect('task/list');
         }
-        return view('task.detail',['task'=>$task]);
+
+        // テンプレートに「取得したレコード」の情報を渡す
+        return view($template_name,['task'=>$task]);
+    }
+
+    public function editSave(TaskRegisterPostRequest $request,$task_id)
+    {
+        // formからの情報を取得する(validate済みのデータの取得)
+        $datum=$request->validated();
+
+        // task_idのレコードを取得する
+        $task = TaskModel::find($task_id);
+            if($task===null)
+            {
+                return redirect('/task/list');
+            }
+            if($task->user_id !== Auth::id())
+            {
+                return redirect('/task/list');
+            }
+
+        // レコードの内容をUPDATEする
+        $task->name=$datum['name'];
+        $task->period=$datum['period'];
+        $task->detail=$datum['detail'];
+        $task->priority=$datum['priority'];
+
+        //レコードを更新
+        $task->save();
+
+        //タスク編集成功
+        $request->session()->flash('front.task_edit_success', true);
+
+        // 詳細閲覧画面にリダイレクトする
+        return redirect(route('detail',['task_id'=>$task->id]));
     }
 
 
