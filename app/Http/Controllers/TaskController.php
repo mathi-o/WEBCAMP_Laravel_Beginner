@@ -22,6 +22,7 @@ class TaskController extends Controller{
                         ->orderBy('period')
                         ->orderBy('created_at')
                         ->paginate($per_page);
+        //dd($list);
                        // ->get();//「user_idが"認可情報"と一致している」tasksテーブルの全件を取得。where('user_id',Auth::id())がなければtasksテーブルの全件取得
         /*$sql=TaskModel::where('user_id',Auth::id())
                         ->orderBy('priority','DESC')
@@ -67,6 +68,21 @@ class TaskController extends Controller{
 
         //
         return redirect('/task/list');
+    }
+
+    public function detail($task_id){
+        $task = TaskModel::find($task_id);
+
+        if($task===null)
+        {
+            return redirect('/task/list');
+        }
+
+        if($task->user_id !== Auth::id())
+        {
+            return redirect('task/list');
+        }
+        return view('task.detail',['task'=>$task]);
     }
 
 
