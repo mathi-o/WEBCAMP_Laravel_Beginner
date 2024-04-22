@@ -4,11 +4,19 @@
 
 {{--コンテンツ--}}
 @section('contets')
-        <h1>タスクの登録(未実装)</h1>
+        <h1>タスクの登録</h1>
         @if (session('front.task_register_success') == true)
                 タスクを登録しました<br>
         @endif
-
+        @if (session('front.task_delete_success') == true)
+            タスクを削除しました<br>
+        @endif
+        @if (session('front.task_completed_success') == true)
+            タスクを完了しました。<br>
+        @endif
+        @if (session('front.task_completed_failure') == true)
+            タスク完了に失敗しました<br>
+        @endif
         @if($errors->any())
                 <div>
                     @foreach($errors->all() as $error)
@@ -27,7 +35,7 @@
                 <label><input name="priority" type="radio" value="3" @if(old('priority')==3) checked @endif>高い </label><br>
                 <button>タスクを登録する</button>
         </form>
-        <h1>タスク一覧(未実装)</h1>
+        <h1>タスク一覧</h1>
         <a href="./top.html">CSVダウンロード</a><br>
         <table border="1">
             <tr>
@@ -43,7 +51,10 @@
 
                 <td><a href="{{route('detail',['task_id'=>$task->id])}}">詳細閲覧</a>
                 <td><a href="{{ route('edit',['task_id'=>$task->id]) }}">編集</a>
-                <td><form action="./top.html"><button>完了</button></form>
+                <td><form action="{{route('complete',['task_id'=>$task->id])}}" method="post">
+                    @csrf
+                    <button onclick='return confilm("このタスクを完了しますか？");' >完了</button>
+                </form>
             </tr>
         @endforeach
 

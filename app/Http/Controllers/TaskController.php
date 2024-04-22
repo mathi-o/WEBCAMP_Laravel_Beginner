@@ -7,6 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\TaskRegisterPostRequest;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Task as TaskModel;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Models\CompletedTask as CompletedTaskModel;
 
 class TaskController extends Controller{
     /**
@@ -140,6 +143,67 @@ class TaskController extends Controller{
         return redirect(route('detail',['task_id'=>$task->id]));
     }
 
+    public function delete($task_id,Request $request)
+    {
+        //task_idのレコード入手
+        $task = TaskModel::find($task_id);
+            if($task===null)
+            {
+                return redirect('/task/list');
+            }
+            if($task->user_id !== Auth::id())
+            {
+                return redirect('/task/list');
+            }
+        //タスクを削除する
+        if ($task !== null)
+            {
+                $task->delete();
+            }
+        $request->session()->flash('front.task_delete_success',true);
+        //一覧に遷移する
+        return redirect('/task/list');
+
+    }
+
+    public function complete($task_id,Request $request)
+    {
+        try{
+
+            DB::beginTransaction();
+
+        //タスクIDのレコード取得
+        $task = TaskModel::find($task_id);
+            if($task===null)
+            {
+                throw new \Exception('');
+            }
+           // var_dump($task->toArray()); exit;
+        //tasks側を削除する
+        $task->delete();
+        //conpleted_tasks側にインサートする
+        $dask_datum = $task->toArray(); //toArray() メソッドは、「Modelインスタンスのデータを連想配列として取り出せる」メソッド
+        unset($dask_datum['created_at']);
+        unset($dask_datum['updated_at']);
+        $r = CompletedTaskModel::create($dask_datum);
+        if($r === null){
+            //insertに失敗したのでトランザクション中止
+            throw new \Exception('');
+        }
+        //echo "処理成功"; exit;
+
+
+            DB::commit();
+            $request->session()->flash('front.task_completed_success',true);//完了メッセージ出力
+
+        } catch(\Throwable $e){
+            //var_dump($e->getMessage()); exit; //デバック処理
+            DB::rollBack();
+            $request->session()->flash('front.task_completed_failure',true); //完了失敗メッセージ出力
+        }
+        //一覧に遷移する
+        return redirect('task/list');
+    }
 
 }
 
