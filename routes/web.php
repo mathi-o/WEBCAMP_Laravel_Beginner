@@ -8,6 +8,7 @@ use App\Http\Controllers\TestController;
 use App\Http\Controllers\Admin\AuthController as AdminAuthController;
 use App\Http\Controllers\Admin\HomeController as AdminHomeController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
+use App\Http\Controllers\CompletedTaskController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -38,6 +39,9 @@ Route::middleware(['auth'])->group(function(){
     });
     Route::get('/logout',[AuthController::class,'logout']);
 });
+
+Route::get('/completed_tasks/list',[CompletedTaskController::class,'list'])->whereNumber('task_id')->name('completedTask');
+
 //管理画面
     Route::prefix('/admin')->group(function(){
         Route::get('',[AdminAuthController::class,'index'])->name('admin.index');

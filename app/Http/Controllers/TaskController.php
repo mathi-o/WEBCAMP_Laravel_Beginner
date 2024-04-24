@@ -19,7 +19,7 @@ class TaskController extends Controller{
      * @return \Illuminate\view\view
      */
     public function list(){
-        $per_page=20;
+        $per_page=2;
         //一覧の取得
         $list=$this->getListBuilder()
                    ->paginate($per_page);
