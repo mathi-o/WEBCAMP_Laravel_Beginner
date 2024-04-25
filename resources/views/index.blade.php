@@ -7,7 +7,7 @@
             ユーザを登録しました！
         @endif
         @if(session('front.task_register_failure') == true)
-            ユーザ登録失敗
+            ユーザ登録失敗しました。
         @endif
         @if ($errors->any())
             <div>
