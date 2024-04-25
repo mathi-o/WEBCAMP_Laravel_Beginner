@@ -4,10 +4,10 @@
 {{--メインコンテンツ--}}
 @section ('contets')
         @if(session('front.task_register_success') == true)
-            会員登録完了
+            ユーザを登録しました！
         @endif
         @if(session('front.task_register_failure') == true)
-            会員登録失敗
+            ユーザ登録失敗
         @endif
         @if ($errors->any())
             <div>
@@ -24,7 +24,7 @@
             <button>ログインする</button>
         </form>
 
-        <menu>
-            <a href="/user/register">会員登録</a>
-        </menu>
+
+        <a href="/user/register">会員登録</a>
+
 @endsection
