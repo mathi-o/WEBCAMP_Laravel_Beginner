@@ -19,7 +19,7 @@
             @method("PUT")
             タスク名:<input name="name" value="{{old('name') ?? $task->name}}"><br>
             期限:<input name="period" type="date" value="{{ old('period') ?? $task->period}}"><br>
-            タスク詳細:<textarea name="detail"> {{ old('detail') ?? $task->detail }} </textarea><br>
+            タスク詳細:<textarea name="detail">{{ old('detail') ?? $task->detail }}</textarea><br>
             重要度:<label><input name="priority" type="radio"  value="1" @if((old('priority') ?? $task->priority)==1) checked @endif>低い</label>/
                 <label><input name="priority" type="radio"  value="2" @if((old('priority') ?? $task->priority)==2) checked @endif>普通 </label>/
                 <label><input name="priority" type="radio" value="3" @if((old('priority') ?? $task->priority)==3) checked @endif>高い </label><br>
