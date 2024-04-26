@@ -3,12 +3,7 @@
 
 {{--メインコンテンツ--}}
 @section ('contets')
-        @if(session('front.task_register_success') == true)
-            ユーザを登録しました！
-        @endif
-        @if(session('front.task_register_failure') == true)
-            ユーザ登録失敗しました。
-        @endif
+
         @if ($errors->any())
             <div>
             @foreach ($errors->all() as $error)
@@ -17,6 +12,12 @@
             </div>
         @endif
         <h1>ログイン</h1>
+         @if(session('front.task_register_success') == true)
+            ユーザを登録しました！
+        @endif
+        @if(session('front.task_register_failure') == true)
+            ユーザ登録失敗しました。
+        @endif
         <form action="/login" method="post">
             @csrf
             email：<input name="email" value="{{old('email')}}"><br>

@@ -14,17 +14,6 @@
                 <td>{{$user->name}}
                 <td>{{$user->task_num}}
         @endforeach
-            <tr>
-                <td>1
-                <td>WEB太郎
-                <td>10
-            <tr>
-                <td>2
-                <td>DMM 次郎
-                <td>42
-            <tr>
-                <td>3
-                <td>CAMP三郎
-                <td>5
+
         </table>
 @endsection
