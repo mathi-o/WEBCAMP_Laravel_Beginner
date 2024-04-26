@@ -57,7 +57,7 @@ Route::post('/user/register',[UserController::class,'register'])->name('user_reg
             Route::get('/user/list',[AdminUserController::class,'list'])->name('admin.user.list');
         });
         Route::get('/admin/logout',[AdminAuthController::class,'logout']);
-
+        Route::get('/logout',[AdminAuthController::class,'logout']);
 });
 Route::post('/login',[AuthController::class,'login']);
 //form 入力用test

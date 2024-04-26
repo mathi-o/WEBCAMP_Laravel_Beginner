@@ -15,7 +15,7 @@
             管理機能画面　3<br>
             管理機能画面　4<br>
 
-        <a href="admin/logout">ログアウトする</a><br>
+        <a href="/admin/logout">ログアウトする</a><br>
         </menu>
 @endauth
 @yield('contets')
