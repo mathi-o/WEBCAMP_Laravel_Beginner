@@ -56,7 +56,7 @@ Route::post('/user/register',[UserController::class,'register'])->name('user_reg
             Route::get('/top',[AdminHomeController::class,'top'])->name('admin.top');
             Route::get('/user/list',[AdminUserController::class,'list'])->name('admin.user.list');
         });
-        Route::get('/logout',[AdminAuthController::class,'logout']);
+        Route::get('/admin/logout',[AdminAuthController::class,'logout']);
 
 });
 Route::post('/login',[AuthController::class,'login']);
