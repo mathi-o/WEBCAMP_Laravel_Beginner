@@ -4,7 +4,7 @@
 
 {{--コンテンツ--}}
 @section('contets')
-    <h1>タスク完了一覧</h1>
+    <h1>完了タスクの一覧</h1>
     <a href="/task/list">タスク一覧に戻る</a><br>
     <table border="1">
             <tr>
