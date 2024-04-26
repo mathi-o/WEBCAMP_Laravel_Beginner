@@ -28,13 +28,13 @@
         <a href="/completed_tasks/list">最初のページ</a>
     @else
         最初のページ
-    @endif
+    @endif/
 
     @if($list->previousPageUrl() !== null)
         <a href="{{$list->previousPageUrl()}}">前に戻る</a>
     @else
         前に戻る
-    @endif
+    @endif/
 
     @if($list->nextPageUrl() !== null)
         <a href="{{$list->nextPageUrl()}}">次に進む</a>
@@ -42,6 +42,7 @@
         次に進む
     @endif
     <br>
+    <hr>
 <menu>
     <a href="/logout">ログアウト</a>
 </menu>
