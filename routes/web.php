@@ -1,4 +1,4 @@
-<?php
+ware<?php
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\WelcomeController;

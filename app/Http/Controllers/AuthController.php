@@ -25,7 +25,7 @@ class AuthController extends Controller{
         //var_dump($datum); exit;
 
         //認証
-        if (Auth::attempt($datum) === false) {
+        if (Auth::attempt($datum) === false) { //認証がOKかどうか
             return back()
                    ->withInput() // 入力値の保持
                    ->withErrors(['auth' => 'emailかパスワードに誤りがあります。',]); // エラーメッセージ
